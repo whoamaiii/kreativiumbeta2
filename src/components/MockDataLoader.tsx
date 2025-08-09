@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -16,23 +16,36 @@ import { dataStorage } from '@/lib/dataStorage';
 export const MockDataLoader = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    // Cleanup on unmount
+    return () => {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleLoadMockData = useCallback(async () => {
     setIsLoading(true);
     setLoadingProgress(0);
-    let progressInterval: NodeJS.Timeout | null = null;
 
     try {
       // Simulate loading progress for better UX
       setLoadingProgress(25);
       
       // Generate and load the data based on selected scenario
-      progressInterval = setInterval(() => {
+      progressIntervalRef.current = setInterval(() => {
         setLoadingProgress((oldProgress) => {
           if (oldProgress >= 95) {
-            if (progressInterval) {
-              clearInterval(progressInterval);
-              progressInterval = null;
+            if (progressIntervalRef.current) {
+              clearInterval(progressIntervalRef.current);
+              progressIntervalRef.current = null;
             }
             return 100;
           }
@@ -44,14 +57,16 @@ export const MockDataLoader = () => {
       await loadMockDataToStorage();
       
       // Clear interval before setting final progress
-      if (progressInterval) {
-        clearInterval(progressInterval);
-        progressInterval = null;
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
       }
       
       setLoadingProgress(75);
       
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise(resolve => {
+        timeoutRef.current = setTimeout(resolve, 300);
+      });
       setLoadingProgress(100);
       
       // Get stats for success message
@@ -67,16 +82,16 @@ export const MockDataLoader = () => {
       
     } catch (error) {
       // Clean up interval on error
-      if (progressInterval) {
-        clearInterval(progressInterval);
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
       }
       toast.error('Failed to load mock data', {
         description: error instanceof Error ? error.message : 'Unknown error occurred',
       });
     } finally {
       // Ensure interval is cleared
-      if (progressInterval) {
-        clearInterval(progressInterval);
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
       }
       setIsLoading(false);
       setLoadingProgress(0);
