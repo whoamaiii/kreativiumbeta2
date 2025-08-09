@@ -16,6 +16,7 @@
  */
 
 import { beforeAll, afterEach } from 'vitest';
+import './i18n';
 
 // Runs once before any test suites execute
 beforeAll(() => {

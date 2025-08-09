@@ -2,6 +2,8 @@
  * Global storage and window polyfills for Node test environment.
  * Loaded by Vitest via setupFiles in vitest.config.ts before any test imports.
  */
+import 'fake-indexeddb/auto';
+
 const defineStorage = (targetKey: 'localStorage' | 'sessionStorage') => {
   if (!(globalThis as any)[targetKey]) {
     const store = new Map<string, string>();
