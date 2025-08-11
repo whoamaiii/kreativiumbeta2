@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Target, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { EmotionEntry, SensoryEntry, TrackingEntry } from '@/types/student';
-import { differenceInDays, addDays, format } from 'date-fns';
+import { differenceInDays, addDays } from 'date-fns';
 
 interface DataRequirementsCalculatorProps {
   emotions: EmotionEntry[];
@@ -25,14 +25,6 @@ interface ConfidenceRequirement {
   description: string;
 }
 
-interface RequirementProgress {
-  current: number;
-  needed: number;
-  progress: number;
-  daysToTarget: number;
-  targetDate: Date;
-}
-
 export const DataRequirementsCalculator = ({ 
   emotions, 
   sensoryInputs, 
@@ -42,7 +34,7 @@ export const DataRequirementsCalculator = ({
   const { tAnalytics, formatDate } = useTranslation();
 
   // Define confidence level requirements
-  const requirements: ConfidenceRequirement[] = [
+  const requirements: ConfidenceRequirement[] = useMemo(() => [
     {
       level: 'low',
       percentage: 25,
@@ -70,7 +62,7 @@ export const DataRequirementsCalculator = ({
       color: 'bg-green-500',
       description: String(tAnalytics('confidence.high'))
     }
-  ];
+  ], [tAnalytics]);
 
   // Calculate current data status
   const currentStatus = useMemo(() => {
@@ -249,7 +241,7 @@ export const DataRequirementsCalculator = ({
         {/* All confidence levels overview */}
         <div className="space-y-3">
           <h4 className="font-medium">Alle sikkerhetsnivåer</h4>
-          {progressCalculations.map((calc, index) => (
+          {progressCalculations.map((calc) => (
             <div 
               key={calc.requirement.level}
               className={`flex items-center justify-between p-3 rounded-lg border ${

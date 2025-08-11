@@ -2,7 +2,6 @@ import React, { memo } from 'react';
 import { Info } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTranslation } from '@/hooks/useTranslation';
-import { differenceInDays } from 'date-fns';
 
 interface ConfidenceIndicatorProps {
   confidence: number;

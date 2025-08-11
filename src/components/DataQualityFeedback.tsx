@@ -2,7 +2,6 @@ import { useMemo, memo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
 import { 
   CheckCircle, 
   AlertTriangle, 
@@ -12,9 +11,8 @@ import {
   BarChart3,
   Clock
 } from 'lucide-react';
-import { useTranslation } from '@/hooks/useTranslation';
 import { EmotionEntry, SensoryEntry, TrackingEntry } from '@/types/student';
-import { differenceInDays, eachDayOfInterval, format, subDays, isWithinInterval } from 'date-fns';
+import { eachDayOfInterval, format, subDays, isWithinInterval } from 'date-fns';
 
 interface DataQualityFeedbackProps {
   emotions: EmotionEntry[];
@@ -31,7 +29,7 @@ interface QualityMetric {
   maxScore: number;
   status: 'excellent' | 'good' | 'fair' | 'poor';
   recommendations: string[];
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 /**
@@ -46,8 +44,6 @@ export const DataQualityFeedback = memo(({
   entries, 
   className 
 }: DataQualityFeedbackProps) => {
-  const { tAnalytics, formatDate } = useTranslation();
-
   // Calculate comprehensive data quality metrics
   const qualityMetrics = useMemo(() => {
     const totalDataPoints = emotions.length + sensoryInputs.length;
@@ -68,7 +64,6 @@ export const DataQualityFeedback = memo(({
       return [];
     }
     
-    const dataSpan = differenceInDays(new Date(), allTimestamps[0]) + 1;
     const startDate = allTimestamps[0];
     const endDate = new Date();
 

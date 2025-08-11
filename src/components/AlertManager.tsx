@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { AlertTriangle, CheckCircle, Eye, EyeOff, Clock, TrendingUp } from "lucide-react";
+import { AlertTriangle, CheckCircle, Eye, TrendingUp } from "lucide-react";
 import { alertSystem, AlertHistoryEntry } from "@/lib/alertSystem";
-import { TriggerAlert } from "@/lib/patternAnalysis";
 import { toast } from "sonner";
 import { logger } from '@/lib/logger';
 
@@ -107,19 +106,6 @@ export const AlertManager = ({ studentId, showOnlyUnresolved = false }: AlertMan
         return 'secondary';
       default:
         return 'outline';
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'concern':
-        return <AlertTriangle className="h-4 w-4" />;
-      case 'improvement':
-        return <TrendingUp className="h-4 w-4" />;
-      case 'pattern':
-        return <Clock className="h-4 w-4" />;
-      default:
-        return <AlertTriangle className="h-4 w-4" />;
     }
   };
 

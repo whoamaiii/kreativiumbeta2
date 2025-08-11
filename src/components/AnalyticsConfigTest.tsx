@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { analyticsConfig, PRESET_CONFIGS } from '@/lib/analyticsConfig';
+import { analyticsConfig } from '@/lib/analyticsConfig';
 import { useAnalyticsWorker } from '@/hooks/useAnalyticsWorker';
 import { CheckCircle, XCircle, RefreshCw, Settings } from 'lucide-react';
 
@@ -12,9 +12,7 @@ interface TestResult {
   message: string;
 }
 
-interface AnalyticsConfigTestProps {}
-
-const AnalyticsConfigTest: React.FC<AnalyticsConfigTestProps> = () => {
+const AnalyticsConfigTest: React.FC = () => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [currentConfig, setCurrentConfig] = useState(analyticsConfig.getConfig());
   const { cacheSize, clearCache } = useAnalyticsWorker();

@@ -5,7 +5,7 @@ import { Progress } from '@/components/ui/progress';
 import { Calendar, CheckCircle2, Clock, Target } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { EmotionEntry, SensoryEntry, TrackingEntry } from '@/types/student';
-import { differenceInDays, addDays, format } from 'date-fns';
+import { differenceInDays, addDays } from 'date-fns';
 
 interface DataCollectionRoadmapProps {
   emotions: EmotionEntry[];
@@ -34,7 +34,7 @@ export const DataCollectionRoadmap = ({
   entries, 
   className 
 }: DataCollectionRoadmapProps) => {
-  const { tAnalytics, formatDate } = useTranslation();
+  const { formatDate } = useTranslation();
 
   // Calculate current data status
   const currentStatus = useMemo(() => {
@@ -230,7 +230,7 @@ export const DataCollectionRoadmap = ({
             {/* Timeline line */}
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border" />
             
-            {milestones.map((milestone, index) => (
+            {milestones.map((milestone) => (
               <div key={milestone.id} className="relative flex items-start gap-4 pb-6">
                 {/* Milestone icon */}
                 <div className={`relative z-10 flex items-center justify-center w-12 h-12 rounded-full border-2 ${

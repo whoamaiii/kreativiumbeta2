@@ -12,8 +12,6 @@ import {
   Brain,
   RefreshCw,
   Activity,
-  CheckCircle,
-  XCircle,
   Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -23,7 +21,7 @@ import { Slider } from '@/components/ui/slider';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { analyticsConfig, AnalyticsConfiguration, PRESET_CONFIGS } from '@/lib/analyticsConfig';
 import { mlModels, ModelMetadata, ModelType } from '@/lib/mlModels';
@@ -167,7 +165,7 @@ export const AnalyticsSettings: React.FC<AnalyticsSettingsProps> = ({
         } else {
           toast.error("Invalid configuration file");
         }
-      } catch (error) {
+      } catch (_error) {
         toast.error("Failed to read configuration file");
       }
     };
@@ -195,7 +193,7 @@ export const AnalyticsSettings: React.FC<AnalyticsSettingsProps> = ({
       await loadModelStatus();
       
       toast.success(`${modelType} model has been removed`);
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to delete model");
     } finally {
       setIsDeletingModel(null);

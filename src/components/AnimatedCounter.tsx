@@ -7,7 +7,7 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
-export const AnimatedCounter = memo(({ value, duration = 0.8, className }: AnimatedCounterProps) => {
+export const AnimatedCounter = memo(({ value, className }: AnimatedCounterProps) => {
   const [displayValue, setDisplayValue] = useState(0);
   const spring = useSpring(0, { stiffness: 80, damping: 20 });
   const display = useTransform(spring, (latest) => Math.round(latest));

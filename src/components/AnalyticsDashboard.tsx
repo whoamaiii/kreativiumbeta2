@@ -38,7 +38,6 @@ import { useTranslation } from "@/hooks/useTranslation";
 import { analyticsExport, ExportFormat } from "@/lib/analyticsExport";
 import { toast } from "sonner";
 import { logger } from "@/lib/logger";
-import { diagnostics } from "@/lib/diagnostics";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 /**
