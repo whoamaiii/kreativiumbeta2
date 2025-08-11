@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { EmotionEntry, SensoryEntry, TrackingEntry } from '@/types/student';
-import { FilterCriteria, applyFilters } from '@/components/AdvancedFilterPanel';
+import { FilterCriteria, applyFilters } from '@/lib/filterUtils';
 import { HighlightState, TimeRange } from './useVisualizationState';
 import { subDays } from 'date-fns';
 import { logger } from '@/lib/logger';

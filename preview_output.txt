@@ -1,0 +1,5 @@
+
+> vite_react_shadcn_ts@0.1.0 preview
+> vite preview
+
+  ➜  Local:   http://127.0.0.1:4173/
