@@ -20,10 +20,9 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 interface EnvironmentalTrackerProps {
   onEnvironmentalAdd: (entry: Omit<EnvironmentalEntry, 'id' | 'timestamp'>) => void;
-  studentId: string;
 }
 
-export const EnvironmentalTracker = ({ onEnvironmentalAdd, studentId }: EnvironmentalTrackerProps) => {
+export const EnvironmentalTracker = ({ onEnvironmentalAdd }: EnvironmentalTrackerProps) => {
   const { tTracking, tCommon } = useTranslation();
   const [roomTemperature, setRoomTemperature] = useState<number>(22);
   const [lighting, setLighting] = useState<string>('');

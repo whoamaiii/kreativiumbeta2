@@ -1,11 +1,10 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState, useMemo } from 'react';
+import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { EmotionEntry, SensoryEntry } from '@/types/student';
-import { motion, AnimatePresence } from 'framer-motion';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { motion } from 'framer-motion';
+import { XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { useTheme } from 'next-themes'; // Assuming next-themes for theme management
 
 interface DataPoint {
@@ -50,17 +49,12 @@ const processChartData = (entries: (EmotionEntry | SensoryEntry)[], type: 'emoti
 export const EnhancedDataVisualization: React.FC<EnhancedDataVisualizationProps> = ({ emotions, sensoryInputs, studentName }) => {
     const { theme } = useTheme();
     const [dataType, setDataType] = useState<'emotions' | 'sensory'>('emotions');
-    const [selectedSeries, setSelectedSeries] = useState<string | null>(null);
 
     const emotionData = useMemo(() => processChartData(emotions, 'emotions'), [emotions]);
     const sensoryData = useMemo(() => processChartData(sensoryInputs, 'sensory'), [sensoryInputs]);
 
     const activeData = dataType === 'emotions' ? emotionData : sensoryData;
     const uniqueKeys = activeData.length > 0 ? Object.keys(activeData[0]).filter(k => k !== 'date') : [];
-
-    useEffect(() => {
-        setSelectedSeries(uniqueKeys.length > 0 ? uniqueKeys[0] : null);
-    }, [dataType, activeData, uniqueKeys]);
 
     if (activeData.length === 0) {
         return (

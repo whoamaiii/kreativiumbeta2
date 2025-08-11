@@ -19,7 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Goal, Student, GoalDataPoint, Milestone } from "@/types/student";
 import { dataStorage } from "@/lib/dataStorage";
-import { Calendar, Plus, Crosshair, TrendingUp, CheckCircle, Edit, Trash2, Calendar as CalendarIcon } from "lucide-react";
+import { Plus, Crosshair, TrendingUp, CheckCircle, Edit, Trash2, Calendar as CalendarIcon } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { logger } from "@/lib/logger";
@@ -43,7 +43,6 @@ interface GoalManagerProps {
 export const GoalManager = ({ student, onGoalUpdate }: GoalManagerProps) => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
   const [newGoal, setNewGoal] = useState({
     title: "",
     description: "",
@@ -260,7 +259,6 @@ export const GoalManager = ({ student, onGoalUpdate }: GoalManagerProps) => {
       targetValue: 100,
       baselineValue: 0
     });
-    setEditingGoal(null);
   };
 
   const getStatusColor = (status: Goal['status']) => {

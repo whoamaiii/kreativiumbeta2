@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useAnalyticsWorker } from './useAnalyticsWorker';
 
 // Mock the worker used by the hook (note the ?worker suffix)
@@ -53,10 +53,12 @@ describe('useAnalyticsWorker', () => {
     // Simulate a message from the mocked worker
     const mod: any = await import('@/workers/analytics.worker?worker');
     const worker = mod.__getLastWorker();
-    (result.current as any).isAnalyzing = true;
-    worker.onmessage({ data: { type: 'complete', payload: testResults } });
 
-    await new Promise((r) => setTimeout(r, 0));
+    act(() => {
+      (result.current as any).isAnalyzing = true;
+      worker.onmessage({ data: { type: 'complete', payload: testResults } });
+    });
+
     expect(result.current.results).toEqual(testResults);
     expect(result.current.isAnalyzing).toBe(false);
     expect(result.current.error).toBeNull();

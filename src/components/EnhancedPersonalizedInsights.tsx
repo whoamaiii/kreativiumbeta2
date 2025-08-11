@@ -4,7 +4,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
 import { EmotionEntry, SensoryEntry, TrackingEntry, Student } from '@/types/student';
 import { enhancedPatternAnalysis } from '@/lib/enhancedPatternAnalysis';
 import { patternAnalysis } from '@/lib/patternAnalysis';
@@ -20,8 +19,6 @@ import {
   CheckCircle,
   Activity,
   BarChart3,
-  Clock,
-  Zap,
   Heart,
   Shield
 } from 'lucide-react';
