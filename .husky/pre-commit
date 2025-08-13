@@ -3,4 +3,3 @@
 
 # Lint only staged files for speed; fail on warnings for UI literals/i18n
 npm run precommit:lint
-

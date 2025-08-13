@@ -72,6 +72,18 @@ export const AnalyticsDashboard = memo(({
   student,
   filteredData = { entries: [], emotions: [], sensoryInputs: [] },
 }: AnalyticsDashboardProps) => {
+  if (!student) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Analytics Dashboard</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>No student data available.</p>
+        </CardContent>
+      </Card>
+    );
+  }
   // All hooks must be called at the top level, not inside try-catch
   const { tStudent } = useTranslation();
   const [isExporting, setIsExporting] = useState(false);
@@ -603,6 +615,9 @@ export const AnalyticsDashboard = memo(({
   );
 }, (prevProps, nextProps) => {
   // Custom comparison for React.memo to prevent unnecessary re-renders
+  if (!prevProps.student || !nextProps.student) {
+    return false; // If student is not available, re-render
+  }
   return (
     prevProps.student.id === nextProps.student.id &&
     prevProps.student.name === nextProps.student.name &&

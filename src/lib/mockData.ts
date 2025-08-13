@@ -3,6 +3,16 @@ import { Student, TrackingEntry, EmotionEntry, SensoryEntry, EnvironmentalEntry 
 import { dataStorage } from "./dataStorage";
 import { logger } from "./logger";
 
+export const mockStudent: Student = {
+  id: 'student-1',
+  name: 'John Doe',
+  dateOfBirth: '2015-01-01',
+  grade: '3',
+  createdAt: new Date(),
+  lastUpdated: new Date(),
+  version: 1,
+};
+
 type TimeOfDay = 'morning' | 'afternoon' | 'evening';
 
 interface SeedOptions {

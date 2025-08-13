@@ -16,7 +16,15 @@ interface DiagnosticInfo {
   activeListeners?: number;
   componentName?: string;
   action?: string;
-  data?: any;
+  data?: unknown;
+}
+
+interface PerformanceWithMemory extends Performance {
+  memory: {
+    usedJSHeapSize: number;
+    totalJSHeapSize: number;
+    jsHeapSizeLimit: number;
+  };
 }
 
 class DiagnosticLogger {
@@ -53,8 +61,8 @@ class DiagnosticLogger {
   private startPerformanceMonitoring() {
     // Monitor memory usage every 5 seconds
     setInterval(() => {
-      if (this.diagnosticMode && (performance as any).memory) {
-        const memInfo = (performance as any).memory;
+      if (this.diagnosticMode && 'memory' in performance) {
+        const memInfo = (performance as PerformanceWithMemory).memory;
         const usedMB = (memInfo.usedJSHeapSize / 1048576).toFixed(2);
         const totalMB = (memInfo.totalJSHeapSize / 1048576).toFixed(2);
         
@@ -117,7 +125,7 @@ class DiagnosticLogger {
     }
   }
 
-  logWorkerMessage(workerName: string, messageType: string, data?: any) {
+  logWorkerMessage(workerName: string, messageType: string, data?: unknown) {
     if (!this.diagnosticMode) return;
     
     logger.debug('[DIAGNOSTIC] Worker Message', {
@@ -235,9 +243,9 @@ if (typeof window !== 'undefined' && diagnostics.isEnabled()) {
   const originalSetTimeout = window.setTimeout;
   const originalClearTimeout = window.clearTimeout;
 
-  window.setTimeout = function(...args: any[]) {
-    const timerId = originalSetTimeout.apply(window, args as any);
-    diagnostics.trackTimer(timerId as any);
+  window.setTimeout = function(callback: TimerHandler, timeout?: number, ...args: unknown[]) {
+    const timerId = originalSetTimeout.apply(window, [callback, timeout, ...args]);
+    diagnostics.trackTimer(timerId as number);
     return timerId;
   } as typeof window.setTimeout;
 

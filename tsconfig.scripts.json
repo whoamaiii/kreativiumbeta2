@@ -11,5 +11,16 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["scripts/**/*.ts", "tests/**/*.ts"]
+  "include": [
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "tailwind.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "validate-components.ts",
+    "validate-style.ts",
+    "postcss.config.js",
+    "playwright.config.ts",
+    "eslint.config.js"
+  ]
 }
